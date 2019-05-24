@@ -1,0 +1,24 @@
+<div class="container-fluid" appScrollable (scrollPosition)="scrollHandler($event)">
+  <div class="row justify-content-center">
+    <section class="col-12 col-md-10 col-lg-8">
+      <mat-card class="fadeIn" *ngFor="let post of recipeService.data | async">
+        <div class="category">
+          {{post.category}}
+        </div>
+        <mat-card-content routerLink="/recipe/{{post.doc.id}}">
+          <div class="image-container">
+            <img src="{{post.image}}" alt="{{post.title}}">
+          </div>
+          <h2>{{post.title}}</h2>
+          <p>
+            <small>Posted by {{post.author}} &bull; on {{post.published.toDate() | date: 'dd/MM/yyyy hh:mm a'}}</small>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </section>
+    <div class="col-12 col-md-10 col-lg-8">
+      <p class="tag is-warning" *ngIf="recipeService.done | async">No more recipes!</p>
+      <app-loading *ngIf="recipeService.loading | async"></app-loading>
+    </div>
+  </div>
+</div>

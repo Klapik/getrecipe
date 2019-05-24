@@ -1,0 +1,37 @@
+.form-signin {
+  text-align: left;
+}
+
+.help-block {
+  font-size: 12px;
+  color: red;
+}
+
+form .has-error .ng-invalid {
+  border: 1px solid red;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.jumbotron {
+  background: linear-gradient(to bottom, #ffffff 0%, #EEE 100%);
+  -webkit-box-shadow: 10px 3px 66px -1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 3px 66px -1px rgba(0,0,0,0.75);
+  box-shadow: 10px 3px 66px -1px rgba(0,0,0,0.75);
+  border-radius: 30px;
+}
+
+.btn-primary {
+  background-color: green;
+  border-color: green;
+}
+
+.btn-link {
+  color: green;
+}

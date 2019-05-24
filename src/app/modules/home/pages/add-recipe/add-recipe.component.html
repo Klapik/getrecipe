@@ -1,0 +1,91 @@
+<section>
+  <mat-card>
+
+    <form [formGroup]="recipeForm" (submit)="createRecipe()">
+
+      <!-- Value: {{ recipeForm.value | json }}
+      <p>
+        Form Status: {{ recipeForm.status }}
+      </p>
+      <hr> -->
+
+      <input type="file" name="file" id="file" (change)="onFileChanged($event)" >
+      <div [hidden]="!uploadPercent">
+        <mat-progress-bar mode="determinate" value="{{ uploadPercent | async }}"></mat-progress-bar>
+      </div>
+      <div class="img-container" [hidden]="!image">
+        <img [src]="image || '//:0' ">
+      </div>
+
+      <mat-form-field class="full">
+        <input matInput placeholder="title" formControlName="title">
+      </mat-form-field>
+
+      <mat-form-field class="full">
+        <input matInput placeholder="preparation time (hours:minutes)" formControlName="time">
+      </mat-form-field>
+
+      <mat-form-field class="form-orderBy">
+        <mat-select formControlName="category" placeholder="Category">
+          <mat-option selected value="Breakfast">Breakfast</mat-option>
+          <mat-option value="Lunch">Lunch</mat-option>
+          <mat-option value="Snack">Snack</mat-option>
+          <mat-option value="Dinner">Dinner</mat-option>
+          <mat-option value="Dessert">Dessert</mat-option>
+          <mat-option value="Beverages">Beverages</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput placeholder="Recipe description" formControlName="description" rows="5"></textarea>
+      </mat-form-field>
+
+      <div formArrayName="ingredients">
+
+        <ul class="list-group">
+          <li @items *ngFor="let ingredient of ingredientForms.controls; let i=index" [formGroupName]="i" class="list-group-item">
+            <mat-form-field class="array-form">
+              <input matInput placeholder="name" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field class="array-form">
+              <input matInput placeholder="quantity" formControlName="quantity">
+            </mat-form-field>
+
+            <mat-form-field class="array-form">
+              <input matInput placeholder="unit" formControlName="unit">
+            </mat-form-field>
+
+            <button mat-icon-button type="button" color="warn" (click)="deleteIngredient(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </li>
+        </ul>
+
+      </div>
+
+      <button class="mb-3" mat-raised-button type="button" color="primary" (click)="addIngredient()">Add Ingredient</button>
+
+      <div formArrayName="steps">
+
+        <ul class="list-group">
+          <li @items *ngFor="let step of stepForms.controls; let i=index" [formGroupName]="i" class="list-group-item">
+
+            <mat-form-field class="array-form">
+                <textarea matInput placeholder="{{i+1}}. Step" formControlName="description" rows="2"></textarea>
+              </mat-form-field>
+
+            <button mat-icon-button type="button" color="warn" (click)="deleteStep(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </li>
+        </ul>
+
+      </div>
+
+      <button mat-raised-button type="button" color="primary" (click)="addStep()">Add Step</button>
+      <button mat-raised-button type="submit" [disabled]="!recipeForm.valid || !image" color="accent">Add Recipe</button>
+    </form>
+
+  </mat-card>
+</section>

@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+
+//https://www.pexels.com/photo/assorted-color-food-miniature-decors-1061581/  <--- site with background imgage!
+
+body {
+  background-color: #ccc;
+  padding-top: 58px;
+  background: url('/assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  &:before {
+    content: '';
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	//background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
+  opacity: .8; 
+  z-index: -1;
+  background: white;
+  }
+}
+
+.center-content, app-login, app-register {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$ngBlog-app-primary: mat-palette($mat-blue-grey, 900);
+$ngBlog-app-accent:  mat-palette($mat-red, A200);
+
+$ngBlog-app-warn:    mat-palette($mat-red);
+
+$ngBlog-app-theme: mat-light-theme($ngBlog-app-primary, $ngBlog-app-accent, $ngBlog-app-warn);
+
+@include angular-material-theme($ngBlog-app-theme);
+

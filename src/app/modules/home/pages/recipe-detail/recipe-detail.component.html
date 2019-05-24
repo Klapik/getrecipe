@@ -1,0 +1,174 @@
+<!-- <ng-container *ngIf="post">
+
+
+    <div [hidden]="!editing">
+      <mat-card>
+        <h1>Edit Post</h1>
+          <mat-form-field>
+            <input matInput placeholder="Post title" [(ngModel)]="post.title" name="title">
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <textarea matInput placeholder="Post content" [(ngModel)]="post.description" name="content" rows="10"></textarea>
+          </mat-form-field>
+          <br>
+          <button mat-raised-button (click)="updatePost()" color="accent">Save</button>
+          <button mat-button (click)="editing=false" *ngIf="editing">Cancel</button>
+    </mat-card>
+    </div>
+  
+    <div [hidden]="editing">
+      <mat-card>
+        <img mat-card-image src="{{post.image}}" alt="{{post.title}}">
+        <h2>{{post.title}}</h2>
+        <p>
+          <small>Posted by {{post.author}} &bull; on {{post.published.toDate() | date: 'dd/MM/yyyy hh:mm'}}</small>
+        </p>
+        <mat-card-content>
+          <p>{{ post.description }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end" *ngIf="auth.currentUserId === post.userId">
+          <button mat-icon-button (click)="editing=true">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="delete(post.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
+   -->
+
+<div class="container">
+  <div class="col-lg-10 offset-md-1">
+    <div class="detail-block">
+      <div class="row single-product">
+        <div class="col-12 col-md-6 col-lg-5">
+          <div class="owl-single-product">
+            <img class="img-fluid" bind="" src="{{post?.image}}">
+          </div>
+          <div class="single-product-gallery-thumbs gallery-thumbs">
+            <div id="owl-single-product-thumbnails" class="owl-carousel owl-theme"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-7 product-info-block">
+          <div class="product-info">
+            <h1 class="name"> {{ post?.title}}</h1>
+            <div class="rating-reviews m-t-20">
+              <div class="row">
+                <div class="col-lg-10">
+
+                  <div class="rating-readonly">
+                    <ng-container *ngFor="let star of starList">
+
+                      <label class="{{star}} full"></label>
+                      <label class="{{star}} half"></label>
+
+                    </ng-container>
+                  </div>
+
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+
+            <div class="price-container info-container m-t-20">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>
+                    <small routerLink="/user/{{post?.userId}}">Posted by {{post?.author}} &bull; on {{post?.published.toDate() | date: 'dd/MM/yyyy hh:mm a'}}</small>
+                  </p>
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row single-product">
+        <div class="col-12 col-md-12 col-lg-12 description-container m-t-20">{{ post?.description}}</div>
+        <div class="col-12 col-md-12 col-lg-12 description-container m-t-20 m-b-20">
+          <div *ngFor="let ingredient of post?.ingredients">
+            {{ingredient?.name}} {{ingredient?.quantity}}{{ingredient?.unit}}
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12 description-container m-t-20 m-b-20">
+          <div class="m-b-10" *ngFor="let step of post?.steps; let i=index">
+            {{i+1}}. {{step?.description}}
+          </div>
+        </div>
+        <div align="end" class="col-12" *ngIf="isUserChecked && auth.authState && (auth?.currentUserId === post?.userId)">
+          <button mat-icon-button (click)="delete()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="detail-block m-t-10 review-wrap">
+      <h3>Reviews</h3>
+      <div class="reviews">
+        <div *ngFor="let review of reviews" class="review">
+          <div class="review-title">
+            <span class="reviewer">
+              <i class="material-icons">
+                person
+              </i>
+              <span routerLink="/user/{{post?.userId}}">{{review?.author}}</span>
+            </span>
+            <span>
+                <small>Posted on {{review?.published.toDate() | date: 'dd/MM/yyyy hh:mm a'}}</small>
+            </span>
+          </div>
+          <div class="text">{{review?.review}}</div>
+        </div>
+      </div>
+      <div *ngIf="isUserChecked && auth.authState" class="review-form">
+        <div class="form-container">
+          <div *ngIf="!isRated" class="row">
+            <fieldset class="rating">
+              <ng-container *ngFor="let num of [5, 4, 3, 2, 1]">
+
+                <input (click)="starHandler(num)" [id]="'star'+num" [value]="num-0.5" name="rating" type="radio" />
+
+                <label class="full" [for]="'star'+num"></label>
+
+
+                <input (click)="starHandler(num-0.5)" [value]="num-0.5" [id]="'halfstar'+num" name="rating" type="radio" />
+
+                <label class="half" [for]="'halfstar'+num"></label>
+
+              </ng-container>
+            </fieldset>
+          </div>
+          <form novalidate [formGroup]="reviewFormGroup" (submit)="postReview()" class="cnt-form">
+
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Recipe review *" formControlName="review" rows="5"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="action text-right">
+              <button mat-raised-button type="submit" [disabled]="!reviewFormGroup.valid" color="accent">Add Review</button>
+            </div>
+            <!-- /.action -->
+
+          </form>
+          <!-- /.cnt-form -->
+        </div>
+        <!-- /.form-container -->
+      </div>
+
+    </div>
+  </div>
+</div>

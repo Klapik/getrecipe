@@ -1,0 +1,26 @@
+.search {
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid gainsboro;
+    color: grey;
+    padding: 0 10px;
+    .mat-icon {
+        vertical-align: middle;
+    }
+}
+
+.navbar {
+a {
+    font-weight: 600;
+}
+ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,8292ad+100 */
+background: #ffffff; /* Old browsers */
+background: -moz-linear-gradient(top, #ffffff 0%, #EEE 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #ffffff 0%,#EEE 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #ffffff 0%,#EEE 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#EEE',GradientType=0 ); /* IE6-9 */
+}
+
+.nav-item:hover {
+    cursor: pointer;
+}
