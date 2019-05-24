@@ -1,6 +1,7 @@
 # GetRecipe
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.1.
+To run the project, you must provide firebase and algolia keys in enviroments.
 
 ## Development server
 
